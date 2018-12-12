@@ -1,0 +1,42 @@
+body { background-color: #F2F6D0 }
+#wrapper {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5%;
+}
+
+.displayedArt{
+    float: left;
+}
+
+img,.card-body{
+    height: 200px;
+}
+
+.card-text{
+    font-size: 12.5px;
+}
+
+h4{
+    text-align: center;
+    border: 1px navy;
+}
+
+textarea, input {
+    display: block;
+    width: 100%;
+    background-color: #FCF5C7;
+  }
+  input {
+    height: 36px;
+    font-size: 24px;
+  }
+  textarea {
+    height: 150px;
+    font-size: 18px;
+  }
+#savenote{
+    float: right;
+    margin-bottom: 5px;
+}

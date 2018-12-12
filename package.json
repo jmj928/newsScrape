@@ -1,0 +1,27 @@
+{
+  "name": "newsScrape",
+  "version": "1.0.0",
+  "description": "newsScrape",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmj928/newsScrape.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmj928/newsScrape/issues"
+  },
+  "homepage": "https://github.com/jmj928/newsScrape#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.3.15"
+  }
+}

@@ -1,0 +1,34 @@
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Get your daily Washington Post news here!</h1>
+          <p>
+            <a href="/" id="add" class="btn btn-primary my-2">Scrape New Articles</a>
+            <a href="/" id="clear" class="btn btn-secondary my-2">Clear Articles</a>
+          </p>
+        </div>
+    </section>
+    
+    
+    <div id="wrapper">
+      <div class="row">
+      <div id="articles"></div>
+      </div>
+      
+      <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div id="notes"></div>
+            </div>
+            <div class="modal-body">
+                <div id="notesBody"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+            </div>
+            </div>
+        </div>
+        </div>
+      
+    </div>
