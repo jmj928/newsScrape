@@ -29,8 +29,12 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
+
+  var articlesArray = ["true-crime/?", "arts-and-entertainment/?"];
+
+  var randomNumber = Math.floor(Math.random() * 2);
     // First, we grab the body of the html with axios
-    axios.get("https://www.washingtonpost.com/news/true-crime/?").then(function(response) {
+    axios.get("https://www.washingtonpost.com/news/" + articlesArray[randomNumber]).then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
      // console.log(response.data);
@@ -181,6 +185,30 @@ app.post("/submit/:id", function(req, res) {
         res.json(err);
       });
   });
+
+  // Delete One from the DB
+app.get("/delete/:id", function(req, res) {
+  // Remove a note using the objectID
+  console.log(req.params.id);
+  db.Note.findOneAndDelete(
+    
+    {_id :  req.params.id }
+    ,
+    function(error, removed) {
+      // Log any errors from mongojs
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the mongojs response to the browser
+        // This will fire off the success function of the ajax request
+        console.log(removed);
+        res.send(removed);
+      }
+    }
+  );
+});
 
 // Start the server
 app.listen(PORT, function() {

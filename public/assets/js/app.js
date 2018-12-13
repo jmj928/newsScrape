@@ -43,17 +43,18 @@ $(document).on("click", "#clear", function() {
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "GET",
-      url: "/scrapeNew"
+      url: "/scrape"
     })
       // With that done
       .then(function(data) {
         // Log the response
         console.log(data);
-        $("#articles").empty();
-        for (var i = 0; i < data.length; i++) {
-          // Display the apropos information on the page
-          $("#articles").append("<div class='col-md-4 displayedArt'><div class='card mb-4 shadow-sm'><div style='width: 18rem' class = 'card' data-id='" + data[i]._id + "'> <img class ='card-img-top' src='" + data[i].img +"'><div class='card-body'> <h6 class='card-title'> <a href=https://www.washingtonpost.com"+data[i].link + "? class='card-link'>"+data[i].title + "</a> </h6> <p class='card-text'>"+ data[i].description + "</p> </div></div></div>");
-        }
+        location.reload();
+        // $("#articles").empty();
+        // for (var i = 0; i < data.length; i++) {
+        //   // Display the apropos information on the page
+        //   $("#articles").append("<div class='col-md-4 displayedArt'><div class='card mb-4 shadow-sm'><div style='width: 18rem' class = 'card' data-id='" + data[i]._id + "'> <img class ='card-img-top' src='" + data[i].img +"'><div class='card-body'> <h6 class='card-title'> <a href=https://www.washingtonpost.com"+data[i].link + "? class='card-link' target='_blank'>"+data[i].title + "</a> </h6> <p class='card-text'>"+ data[i].description + "</p> </div><div class='card-footer'><button type='button' data-id='" + data[i]._id + "' class=' addNote btn btn-primary' data-toggle='modal' data-target='#noteModal'> View Notes</button></div></div></div>");
+        // }
       });
   
     });
@@ -83,14 +84,14 @@ $(document).on("click", ".addNote", function() {
 
       for(var i = 0; i<data.notes.length; i++){
         console.log(data.notes[i].title);
-        $("#notesBody").append( "<p>" + data.notes[i].title + "</p> <button class='btn btn-danger' data-id='" + data._id + "' id='delnote'>X</button>" );
+        $("#notesBody").append( "<p>" + data.notes[i].body + " <button class='btn btn-danger' data-id='" + data.notes[i]._id + "' id='delnote'>X</button></p>" );
       }
 
 
       // An input to enter a new title
-      $("#notesBody").append("<input id='titleinput' name='title' >");
+      $("#notesBody").append("<input placeholder='Title' id='titleinput' name='title' >");
       // A textarea to add a new note body<h2>" + data.title + "</h2>
-      $("#notesBody").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notesBody").append("<textarea placeholder='Note...' id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notesBody").append("<button class='btn btn-primary' data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
@@ -108,7 +109,7 @@ $(document).on("click", ".addNote", function() {
 $(document).on("click", "#savenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-
+  console.log(thisId);
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
@@ -127,10 +128,34 @@ $(document).on("click", "#savenote", function() {
       // Empty the notes section
       //$("#notes").empty();
     });
-
+  location.reload();
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
+});
+
+// When user clicks the delete button for a note
+$(document).on("click", "#delnote", function() {
+  // Save the p tag that encloses the button
+  var thisId = $(this).attr("data-id");
+  // Make an AJAX GET request to delete the specific note
+  // this uses the data-id of the p-tag, which is linked to the specific note
+  $.ajax({
+    type: "GET",
+    url: "/delete/" + thisId,
+
+    // On successful call
+    success: function(response) {
+      // Remove the p-tag from the DOM
+      // selected.remove();
+      location.reload();
+      // Clear the note and title inputs
+      // $("#note").val("");
+      // $("#title").val("");
+      // Make sure the #action-button is submit (in case it's update)
+      // $("#action-button").html("<button id='make-new'>Submit</button>");
+    }
+  });
 });
 
   //========== Modal to Display Youtube ================================
