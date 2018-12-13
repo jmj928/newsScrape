@@ -26,7 +26,8 @@ app.set("view engine", "handlebars");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI);
 
 app.get("/scrape", function(req, res) {
 
@@ -108,48 +109,6 @@ app.get("/", function(req, res) {
     res.render("index");
   });
 
-app.get("/scrapeNew", function(req, res) {
-// First, we grab the body of the html with axios
-axios.get("https://www.washingtonpost.com/news/arts-and-entertainment/?").then(function(response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(response.data);
-    // console.log(response.data);
-    var result = [];
-    // Now, we grab every h2 within an article tag, and do the following:
-    $("div.story-list-story").each(function(i, element) {
-
-    var title = $(element).find("h3").find("a").text();
-    // // Add the text and href of every link, and save them as properties of the result object
-    var link = $(element).find("h3").find("a").attr("href");
-
-    var description = $(element).find(".story-description").find("p").text();
-
-    var img = $(element).find(".story-image").find("a").find("img").attr("src");
-
-    result.push({
-        title: title,
-        link: link,
-        description : description,
-        img : img
-        });
-    
-    // // Create a new Article using the `result` object built from scraping
-    db.Article.create(result)
-        .then(function(dbArticle) {
-        // View the added result in the console
-        console.log(dbArticle);
-        })
-        .catch(function(err) {
-        // If an error occurred, log it
-        console.log(err);
-        });
-    });
-
-    // Send a message to the client
-    console.log(result);
-    res.render("index");
-});
-});
 
 app.get("/articles/:id", function(req, res) {
 
