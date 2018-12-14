@@ -24,10 +24,9 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-var mongoURL = process.env.MONGODB_URI || "mongodb://localhost:27017/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/mongoHeadlines";
 
-// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-mongoose.connect(mongoURL);
+mongoose.connect(MONGODB_URI);
 
 // var nodeEnv = process.env.NODE_ENV || "development";
 
