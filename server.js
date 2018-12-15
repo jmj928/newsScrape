@@ -40,11 +40,11 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
 
-  var articlesArray = ["true-crime/?", "arts-and-entertainment/?"];
+ // var articlesArray = ["true-crime/?", "arts-and-entertainment/?"];
 
   var randomNumber = Math.floor(Math.random() * 2);
     // First, we grab the body of the html with axios
-    axios.get("https://www.washingtonpost.com/news/" + articlesArray[randomNumber]).then(function(response) {
+    axios.get("https://www.washingtonpost.com/news/arts-and-entertainment/?").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
      // console.log(response.data);
@@ -58,7 +58,7 @@ app.get("/scrape", function(req, res) {
 
         var description = $(element).find(".story-description").find("p").text();
 
-        var img = $(element).find(".story-image").find("a").find("img").attr("src");
+        var img = $(element).find(".story-image").find("a").find("img").attr("data-hi-res-src");
 
         result.push({
             title: title,
